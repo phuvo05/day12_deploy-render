@@ -1,17 +1,31 @@
 # Conversational AI Agent
 
-A simple conversational AI chatbot API built with FastAPI. Supports both rule-based responses and OpenAI API integration.
+A professional conversational AI chatbot with modern web UI built with FastAPI. Supports both rule-based responses and OpenAI API integration.
 
 ## Features
 
-- FastAPI-based REST API
-- Rule-based chatbot (works without OpenAI)
-- Optional OpenAI integration (GPT-3.5/GPT-4)
-- Maintains last 3 messages context
-- Docker support
-- Ready for Render deployment
+- 🎨 **Modern Web UI** - Beautiful, responsive chat interface
+- 🌓 **Dark Mode** - Toggle between light and dark themes
+- 💬 **Real-time Chat** - Smooth messaging experience with typing indicators
+- 🤖 **Dual Mode** - Rule-based (no API key) or OpenAI-powered responses
+- 💾 **Persistent History** - Messages saved in browser localStorage
+- 📱 **Mobile Responsive** - Works perfectly on all devices
+- 🚀 **FastAPI Backend** - High-performance REST API
+- 🐳 **Docker Ready** - Easy containerization and deployment
+- ☁️ **Render Optimized** - One-click deployment to Render
+
+## Screenshots
+
+### Light Mode
+Modern, clean interface with intuitive design.
+
+### Dark Mode
+Easy on the eyes for late-night conversations.
 
 ## API Endpoints
+
+### GET /
+Web UI - Interactive chat interface
 
 ### POST /chat
 Send a message and get a response.
@@ -29,9 +43,6 @@ Send a message and get a response.
   "response": "Hello! How can I help you today?"
 }
 ```
-
-### GET /
-Health check endpoint.
 
 ### GET /health
 Service health status.

@@ -1,6 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+from starlette.requests import Request
 import os
 from agent import ConversationalAgent
 
@@ -15,6 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount static files and templates
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
 # Initialize agent
 agent = ConversationalAgent()
 
@@ -24,9 +32,9 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
 
-@app.get("/")
-async def root():
-    return {"status": "ok", "message": "Conversational AI Agent is running"}
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):

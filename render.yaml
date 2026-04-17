@@ -1,13 +1,39 @@
 services:
+  # Redis service
+  - type: redis
+    name: ai-agent-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+
+  # Web service
   - type: web
-    name: conversational-ai-agent
+    name: ai-agent-app
     env: docker
     plan: free
     healthCheckPath: /health
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: PORT
         value: 10000
-      - key: OPENAI_API_KEY
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: ai-agent-redis
+          property: connectionString
+      - key: REDIS_ENABLED
+        value: true
+      - key: API_KEY
+        generateValue: true
         sync: false
-      - key: OPENAI_MODEL
-        value: gpt-3.5-turbo
+      - key: ADMIN_API_KEY
+        generateValue: true
+        sync: false
+      - key: RATE_LIMIT_REQUESTS
+        value: 10
+      - key: RATE_LIMIT_WINDOW
+        value: 60
+      - key: MONTHLY_COST_LIMIT
+        value: 10.0
+      - key: DEBUG
+        value: false
